@@ -5,3 +5,16 @@ ADL_VR/Library/
 ADL_VR/ProjectSettings/UnityConnectSettings.asset
 
 ADL_VR/Temp
+
+*.csproj
+*.unityproj
+*.sln
+*.sln.meta
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
