@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class ControllerGrabObject : MonoBehaviour {
 
+    [SerializeField] private GameObject _light1 = null;
+    [SerializeField] private GameObject _light2 = null;
+    [SerializeField] private GameObject _switch = null;
+    private Boolean _isLightOn = true;
+
     private SteamVR_TrackedObject trackedObj;
     private GameObject collidingObject;
     private GameObject objectInHand;
@@ -32,6 +37,22 @@ public class ControllerGrabObject : MonoBehaviour {
     // 콜라이더에 진입했을떄 다른 콜라이더를 움켜쥘수 있게 잠재적 타겟으로 설정
     public void OnTriggerEnter(Collider other)
     {
+        Debug.Log("닿은 물체: " + other);
+        if (other.name.Equals(_switch.name) && _isLightOn)
+        {
+            Debug.Log("불을 끈다.");
+            _light1.GetComponent<Light>().enabled = false;
+            _light2.GetComponent<Light>().enabled = false;
+            _isLightOn = false;
+        }
+        else if (other.name.Equals(_switch.name) && !_isLightOn)
+        {
+            Debug.Log("불을 켠다.");
+            _light1.GetComponent<Light>().enabled = true;
+            _light2.GetComponent<Light>().enabled = true;
+            _isLightOn = true;
+        }
+
         SetCollidingObject(other);
     }
 
@@ -98,7 +119,6 @@ public class ControllerGrabObject : MonoBehaviour {
                 ReleaseObject();
             }
         }
-		
 	}
 }
 
