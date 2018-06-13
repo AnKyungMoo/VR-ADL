@@ -2,12 +2,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class ControllerGrabObject : MonoBehaviour {
 
     [SerializeField] private GameObject _light1 = null;
     [SerializeField] private GameObject _light2 = null;
     [SerializeField] private GameObject _switch = null;
+    [SerializeField] private GameObject _missionLabel = null;
     private Boolean _isLightOn = true;
 
     private SteamVR_TrackedObject trackedObj;
@@ -51,6 +53,7 @@ public class ControllerGrabObject : MonoBehaviour {
             _light1.GetComponent<Light>().enabled = true;
             _light2.GetComponent<Light>().enabled = true;
             _isLightOn = true;
+            _missionLabel.SetActive(true);
         }
 
         SetCollidingObject(other);
@@ -107,7 +110,12 @@ public class ControllerGrabObject : MonoBehaviour {
     void Update () {
         if (Controller.GetHairTriggerDown())
         {
-            if (collidingObject)
+            Debug.Log("땡긴 물체: " + collidingObject.name);
+            if (collidingObject.name.Equals("ClearLabel"))
+            {
+                SceneManager.LoadScene("SelectScene");
+            }
+            else if (collidingObject)
             {
                 GrabObject();
             }
